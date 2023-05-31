@@ -1,90 +1,72 @@
-import React , {useState} from 'react'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import './index.css';
-import {newStudent} from "./pages/new-studnet.js";
-import {registeredstudent} from "./pages/registered-students.js";
-import {Navbar} from "./components/navbar.js";
-import { set } from 'mongoose';
+import React from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import RegisterStudent from "./componets/register-student.componet.js";
+import EditStudent from "./componets/edit-student.component.js";
+import StudentList from "./componets/student-list.component.js";
 
 function App() {
-
-  
-  const [fullname, setFullname] = useState("");
-  const [emailaddress, setEmailaddress] = useState("");
-  const [contact, setContact] = useState("");
-  const [emergencycontact, setEmergencycontact] = useState("");
-  const [shirtsize, setShirtsize] = useState("");
-  const [address, setAddress] = useState("");
-  const [comment, setComment] = useState("");
-
-  return (
+  return (<Router>
     <div className="App">
-      <Router>
-        <Navbar/>
-        <Routes>
-        <Route path ="/" element = {<registeredstudent/>}/>
-          <Route path ="/registered-students" element = {<registeredstudent/>}/>
-          <Route path ="/new-studnet" element = {<newStudent />}/>
-            </Routes>
-      </Router>
+      <header className="App-header">
 
-      <main>
+        <Navbar bg="dark" variant="dark">
+          <Container>
 
-  <h1 className="title"> Register New Student</h1>
-  <form>
-  
-<div className="form-group">
-    
-    <label htmlFor="fullname"> Fullname:</label>
-    <input type="text" id="fullname" value={fullname} onChange={(e) => setFullname(e.target.value)}/>
-    
-    </div>
+            <Navbar.Brand>
+              <Link to={"/register-student"} className="nav-link">
+                End of Sem Exam
+              </Link>
+            </Navbar.Brand>
 
-    <div className="form-group">
-    
-    <label htmlFor="emailaddress"> Email:</label>
-    <input type="text" id="emailaddress" value={emailaddress} onChange={(e) => setEmailaddress(e.target.value)}/>
-    
-    </div>
+            <Nav className="justify-content-end">
+              <Nav>
+                <Link to={"/register-student"} className="nav-link">
+                  Register Student
+                </Link>
+              </Nav>
 
-    <div className="form-group">
-    
-    <label htmlFor="contact"> Contact:</label>
-    <input type="text" id="contact" value={contact} onChange={(e) => setContact(e.target.value)}/>
-    
-    </div>
+              {/* <Nav>
+                <Link to={"/edit-student/:id"} className="nav-link">
+                  Edit Student
+                </Link>
+              </Nav> */}
 
-    <div className="form-group">
-    
-    <label htmlFor="emergencycontact"> Emergency Contact:</label>
-    <input type="text" id="emergencycontact" value={emergencycontact} onChange={(e) => setEmergencycontact(e.target.value)}/>
-    
-    </div>
-    <div className="form-group">
-    
-    <label htmlFor="shirtsize"> T-shirt Size:</label>
-    <input type="text" id="shirtsize" value={shirtsize} onChange={(e) => setShirtsize(e.target.value)}/>
-    
-    </div>
-    <div className="form-group">
-    
-    <label htmlFor="address"> Email:</label>
-    <input type="text" id="address" value={address} onChange={(e) => setAddress(e.target.value)}/>
-    
-    </div>
-    <div className="form-group">
-    
-    <label htmlFor="comment"> Email:</label>
-    <input type="text" id="comment" value={comment} onChange={(e) => setComment(e.target.value)}/>
-    
-    </div>
+              <Nav>
+                <Link to={"/student-list"} className="nav-link">
+                  Student List
+                </Link>
+              </Nav>
+            </Nav>
 
-    <button type="submit"> Submit</button>
-    </form>
-</main>
-      
+          </Container>
+        </Navbar>
+      </header>
+
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div className="wrapper">
+              <Switch>
+                <Route exact path='/' component={RegisterStudent} />
+                <Route path="/register-student" component={RegisterStudent} />
+                <Route path="/edit-student/:id" component={EditStudent} />
+                <Route path="/student-list" component={StudentList} />
+              </Switch>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
-  );
+  </Router>);
 }
 
 export default App;
